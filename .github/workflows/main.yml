@@ -87,7 +87,6 @@ jobs:
           tags: kiri11squid/taski_backend:latest
   frontend_tests:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v4
     - name: Set up nodeJS
@@ -149,7 +148,10 @@ jobs:
           tags: kiri11squid/taski_gateway:latest
   send_message:
     runs-on: ubuntu-latest
-    needs: deploy
+    needs:
+      - build_and_push_to_docker_hub
+      - build_frontend_and_push_to_docker_hub
+      - build_gateway_and_push_to_docker_hub
     steps:
     - name: Send message
       uses: appleboy/telegram-action@master
